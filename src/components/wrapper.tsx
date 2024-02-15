@@ -4,7 +4,7 @@ interface WrapperProps {
 
 export default function Wrapper ({children} : WrapperProps) {
   return (
-    <div className="bg-red-500 flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col mx-5 my-4 max-w-screen-lg">
       {children}
     </div>
   )

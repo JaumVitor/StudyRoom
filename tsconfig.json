@@ -27,6 +27,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "src/pages/admin/studyRoom.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,0 +1,10 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg fill="#000000" width="207px" height="207px" viewBox="0 0 24 24" id="left-junction-sign" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line" transform="rotate(180)">
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="SVGRepo_iconCarrier">
+<path id="secondary" d="M17,10H9V7L3.92,11.23a1,1,0,0,0,0,1.54L9,17V14h8Z" style="fill: #0e69af; stroke-width: 2;"/>
+<path id="primary" d="M17,4V3m4,1V3M17,20v1m4-1v1m0-5V8m-4,8V8m0,2H9V7L3.92,11.23a1,1,0,0,0,0,1.54L9,17V14h8Z" style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+</g>
+</svg>
