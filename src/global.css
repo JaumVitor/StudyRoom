@@ -70,7 +70,13 @@
   * {
     @apply border-border;
   }
-  body {
+  /* body {
     @apply bg-background text-foreground;
+  } */
+  html {
+    @apply h-full;
+  }
+  body {
+    @apply h-full;
   }
 }

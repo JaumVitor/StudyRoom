@@ -3,7 +3,7 @@ import SideBar from '../components/sideBar'
 // import ContentMain from '../components/contentMain'
 import Wrapper from '../components/wrapper'
 import { Home } from './admin/home'
-// import { StudyRoom } from './admin/studyRoom'
+import { StudyRoom } from './admin/studyRoom'
 
 export default function MainPage () {
   return (
@@ -13,7 +13,7 @@ export default function MainPage () {
         <Layout> 
           <Wrapper> 
             {/* Dependendo do tipo de usuário, vai renderizar um componente diferente */}
-            <Home />
+            <StudyRoom />
             {/* <ContentMain /> */}
           </Wrapper>
         </Layout>

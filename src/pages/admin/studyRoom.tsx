@@ -172,7 +172,6 @@ export function StudyRoom () {
           Content="O ar condicionado está ligado - Com temperatura de 21C"
         />
       </div>
-    
     </>
   )
 }
