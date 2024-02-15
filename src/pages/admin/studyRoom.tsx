@@ -7,11 +7,21 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
 import { Button } from "@/components/ui/button"
 import { Toaster } from "@/components/ui/sonner"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
-import { toast } from "sonner"
+// import { Label } from "@/components/ui/label"
+// import { toast } from "sonner"
 
 import { BoxInfo } from "@/components/BoxInfo/BoxInfo"
 
@@ -36,12 +46,33 @@ export function StudyRoom () {
           </Button>
         </form>
 
-        <div>
-          <Button onClick={ () => toast("Horário foi reservado") }className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
-            <PlusCircle className="w-4 h-4"/>
-            <p>Agendar Horário </p>
-          </Button>
-        </div>
+        <Dialog>
+          <DialogTrigger>
+            <Button className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
+              <PlusCircle className="w-4 h-4"/>
+              <p>Agendar Horário </p>
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Realizar reserva de horário na sala</DialogTitle>
+              <DialogDescription>
+                <form className="flex flex-col gap-2">
+                  <Input type="name" placeholder="Nome"/>
+                  <Input type="name" placeholder="Matricula"/>
+
+                  {/* Selecionar horários disponiveis */}
+                  <Button className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
+                    <PlusCircle className="w-4 h-4"/>
+                    <p>Agendar</p>
+                  </Button>
+                </form>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+          <Toaster />
+        </Dialog>
+
       </div>
       <Toaster />
       <Table className="border mb-3">
@@ -120,26 +151,28 @@ export function StudyRoom () {
 
       <Separator className="m-4"/>
 
-      <h1 className="text-2xl font-bold mb-4">Informações da sala</h1>
+      <h1 className="text-2xl font-bold">Informações da sala</h1>
+      <div className="cursor-pointer border-dashed border-[2px] border-slate-500 rounded-md bg-slate-300 shadow-sm my-4 mx-auto aspect-video w-3/6 h-3/6 flex items-center justify-center flex-col ">
+      
+      <MdOutlineCameraAlt className="text-6xl opacity-50 text-slate-500"/>
+      <p className="opacity-50">Câmera da sala</p>
+      </div>
+      
       <div className="flex">
         <BoxInfo 
           Title="Lampadas"
           Content="As lampadas estão ligadas"
         />
         <BoxInfo 
-          Title="Split"
-          Content="O ar condicionado está ligado"
-        />
-        <BoxInfo 
           Title="Nº Pessoas"
           Content="3 pessoas"
         />
+        <BoxInfo 
+          Title="Split"
+          Content="O ar condicionado está ligado - Com temperatura de 21C"
+        />
       </div>
-      <div className="border-dashed border-[2px] border-slate-500 rounded-md bg-slate-300 shadow-sm my-6 mx-auto aspect-video w-3/6 h-3/6 flex items-center justify-center flex-col ">
-      
-      <MdOutlineCameraAlt className="text-6xl opacity-50 text-slate-500"/>
-      <p className="opacity-50">Câmera da sala</p>
-      </div>
+    
     </>
   )
 }
