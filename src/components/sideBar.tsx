@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/command"
 
 import { FaArrowRightToBracket } from "react-icons/fa6";
+import { AlarmClockPlus, GraduationCap, Newspaper, School } from "lucide-react";
 
 export default function SideBar () {
   return (
@@ -33,12 +34,28 @@ export default function SideBar () {
             <Command className="bg-blue-950 text-zinc-100 font-bold">
               <CommandInput placeholder="O que deseja procurar ?" />
               <CommandList>
-                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandEmpty>Nenhum resultado</CommandEmpty>
                 <CommandGroup heading="Salas">
-                  <CommandItem>Visualizar salas</CommandItem>
-                  <CommandItem>Criar Salas</CommandItem>
-                  <CommandItem>Relatório das salas reservadas</CommandItem>
-                  <CommandItem>Reservar horário</CommandItem>
+
+                  <CommandItem className="flex gap-2">
+                    <GraduationCap/>
+                    Visualizar salas
+                  </CommandItem>
+
+                  <CommandItem className="flex gap-2">
+                    <School/>
+                    Criar Salas
+                  </CommandItem>
+
+                  <CommandItem className="flex gap-2">
+                    <Newspaper />
+                    Relatório das salas reservadas
+                  </CommandItem>
+                  
+                  <CommandItem className="flex gap-2">
+                    <AlarmClockPlus />
+                    Reservar horário
+                  </CommandItem>
                 </CommandGroup>
               </CommandList>
             </Command>
@@ -47,6 +64,6 @@ export default function SideBar () {
         </SheetHeader>
       </SheetContent>
     </Sheet>
-    </div>
+  </div>
   )
 }
