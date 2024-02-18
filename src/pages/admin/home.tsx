@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import UsingLayoutPage from "../usingLayoutPage"
 
 import { Input } from "@/components/ui/input"
@@ -12,7 +12,7 @@ import { BoxInfo } from "@/components/BoxInfo/BoxInfo"
 import { CreateRoom } from "@/components/CreateRoom/createRoom"
 
 import NotGraph from "@/assets/notgraph.png"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 export interface StudyRoomProps {
   name: string
