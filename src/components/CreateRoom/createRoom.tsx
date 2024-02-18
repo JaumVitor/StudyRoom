@@ -20,26 +20,28 @@ import { StudyRoomProps } from '@/pages/admin/home'
 interface CreateRoomProps {
   isCreateRoomSideBar?: boolean;
   children?: React.ReactNode;
-
-  IPStudyRoom: string;
-  setIpStudyRoom : React.Dispatch<React.SetStateAction<string>>;
-
-  nameStudyRoom: string;
-  setnameStudyRoom : React.Dispatch<React.SetStateAction<string>>;
-
-  studyRooms : StudyRoomProps[];
-  setStudyRooms : React.Dispatch<React.SetStateAction<StudyRoomProps[]>>
+  // name: string;
+  // ip: string;
 }
 
-export function CreateRoom({children,
-  isCreateRoomSideBar,
-  IPStudyRoom,
-  setIpStudyRoom,
-  nameStudyRoom,
-  setnameStudyRoom,
-  studyRooms,
-  setStudyRooms
-} : CreateRoomProps) {
+export function CreateRoom({children, isCreateRoomSideBar} : CreateRoomProps) {
+  const [nameStudyRoom, setnameStudyRoom] = useState<string>('')
+  const [IPStudyRoom, setIpStudyRoom] = useState<string>('')
+
+  const [studyRooms, setStudyRooms] = useState<StudyRoomProps[]>(() => {
+    // Recupera o estado do localStorage ao inicializar
+    const savedStudyRooms = localStorage.getItem('studyRooms');
+    if (savedStudyRooms) {
+      const parsedStudyRooms = JSON.parse(savedStudyRooms);
+      // Verifica se o array recuperado do localStorage está vazio
+      if (Array.isArray(parsedStudyRooms) && parsedStudyRooms.length) {
+        return parsedStudyRooms;
+      }
+    }
+    // Retorna um array vazio se savedStudyRooms for null ou um array vazio
+    return [];
+  });
+
   useEffect(() => {
     // Salva o estado no localStorage sempre que studyRooms for alterado
     if (studyRooms !== undefined) {
@@ -47,7 +49,7 @@ export function CreateRoom({children,
     }
   }, [studyRooms])
 
-  function createStudyRoom() {
+  function createStudyRoom(nameStudyRoom: string, IPStudyRoom: string) {
     const newStudyRoom = {
       name: nameStudyRoom,
       ip: IPStudyRoom,
@@ -98,7 +100,7 @@ export function CreateRoom({children,
               <p>Cancelar</p>
             </Button>
             <Button
-              onClick={() => createStudyRoom()}
+              onClick={() => createStudyRoom(nameStudyRoom, IPStudyRoom)}
               className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1"
             >
               <PlusCircle className="w-4 h-4" />

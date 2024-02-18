@@ -29,10 +29,16 @@ import { useLocation } from "react-router-dom"
 
 export function StudyRoom () {
   const { state } = useLocation()
+
+  const name = state?.name;
+  const ip = state?.ip;
+
+  //Precisa trazer informações da sala
   
   return (
     <UsingLayoutPage>
       <h1 className="text-3xl font-bold mb-2">Horários reservados</h1>
+      <h2 className="text-2xl font-bold mb-2">{name} - IP: {ip}</h2>
       <div className="flex items-center justify-between mb-3">
         <form className="flex gap-2">
           <Input type="name" placeholder="Matricula"/>

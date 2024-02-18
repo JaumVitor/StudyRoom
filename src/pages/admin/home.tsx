@@ -13,7 +13,6 @@ import { CreateRoom } from "@/components/CreateRoom/createRoom"
 
 import NotGraph from "@/assets/notgraph.png"
 import { Link } from "react-router-dom"
-import { StudyRoom } from "./studyRoom"
 
 export interface StudyRoomProps {
   name: string
@@ -22,7 +21,7 @@ export interface StudyRoomProps {
 
 export function Home() {
   // Recupera o estado do localStorage ao inicializar
-  const [studyRooms, setStudyRooms] = useState<StudyRoomProps[]>(() => {
+  const [studyRooms] = useState<StudyRoomProps[]>(() => {
     // Recupera o estado do localStorage ao inicializar
     const savedStudyRooms = localStorage.getItem('studyRooms');
     if (savedStudyRooms) {
@@ -33,20 +32,9 @@ export function Home() {
       }
     }
     // Retorna um array vazio se savedStudyRooms for null ou um array vazio
-    return [ 
-      {
-        name: 'Default Room',
-        ip: '0.0.0.0',
-        infoLamps: 'Default Info',
-        infoPeople: 'Default Info',
-        infoSplit: 'Default Info',
-      }
-    ];
+    return [];
   });
 
-  const [nameStudyRoom, setNameStudyRoom] = useState<string>('')
-  const [IPStudyRoom, setIpStudyRoom] = useState<string>('')
-  
   return (
     <UsingLayoutPage>
         <h1 className="text-2xl font-bold mb-2">Salas criadas</h1>
@@ -76,17 +64,7 @@ export function Home() {
                 </AlertDescription>
               </Alert>
               <div className="flex flex-wrap gap-5 justify-center items-center">
-              <CreateRoom 
-                studyRooms={studyRooms} 
-                setStudyRooms={setStudyRooms}
-
-                nameStudyRoom={nameStudyRoom} 
-                setnameStudyRoom={setNameStudyRoom}
-
-                IPStudyRoom={IPStudyRoom}
-                setIpStudyRoom={setIpStudyRoom}
-              />
-
+                <CreateRoom />
               </div>
             </div>
           </>
@@ -100,9 +78,9 @@ export function Home() {
                     pathname: '/studyRoom',
                   }}
                   state={studyRoom}
+                  key={index}
                 >
                   <BoxInfo
-                    key={index}
                     Title={studyRoom.name}
                     Content={studyRoom.ip}
                     schedules={[
@@ -148,16 +126,7 @@ export function Home() {
             })}
 
             <div className="flex flex-wrap gap-5 justify-center items-center">
-            <CreateRoom 
-              studyRooms={studyRooms} 
-              setStudyRooms={setStudyRooms}
-
-              nameStudyRoom={nameStudyRoom} 
-              setnameStudyRoom={setNameStudyRoom}
-
-              IPStudyRoom={IPStudyRoom}
-              setIpStudyRoom={setIpStudyRoom}
-              />
+            <CreateRoom />
             </div>
           </div>
         )}
