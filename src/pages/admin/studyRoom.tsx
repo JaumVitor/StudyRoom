@@ -51,12 +51,12 @@ export function StudyRoom () {
         <CreateSchedule schedules={
           [
             {hourInit: "10:00", hourEnd: "11:00", status: "expired"},
-            {hourInit: "11:00", hourEnd: "13:00", status: "inProgress"},
-            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
-            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
-            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
-            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
-            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
+            {hourInit: "11:00", hourEnd: "13:00", status: "expired"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "inProgress"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "inProgress"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "available"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "available"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "available"},
           ]
         }/>
       </div>

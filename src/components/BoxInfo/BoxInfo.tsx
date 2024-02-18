@@ -55,7 +55,8 @@ export function BoxInfo ({Title, Content, schedules} : BoxInfoProps) {
                       size={8} 
                       strokeWidth={1.25} 
                       color="#25ca33"
-                  />}
+                    />
+                  }
                 </div>
               ))}
             </div>

@@ -44,30 +44,46 @@ export function CreateSchedule({ schedules }: CreateScheduleProps) {
           <DialogDescription>
             <form className="flex flex-col gap-2">
               <Input className="mb-3" type="name" placeholder="Matricula" />
-              
+
               <Label className="text-zinc-900">Horários disponiveis</Label>
               {/* Selecionar horários disponiveis */}
-              <RadioGroup className='mb-4'>
+              <RadioGroup className="mb-4">
                 {schedules.map((schedule, index) => {
                   const optionId = `option-${index + 1}` // option-1, option-2, option-3, ...
                   return (
                     <div key={index} className="flex items-center space-x-2">
-                      <RadioGroupItem value={optionId} id={optionId} disabled={schedule.status === 'reserved'}/>
-                      <Label className="flex justify-center items-center gap-3" htmlFor={optionId}>
-                        {schedule.hourInit} - {schedule.hourEnd}
-                        {schedule.status === 'reserved' ? (
-                          <FaCircle
-                            size={8}
-                            strokeWidth={1.25}
-                            color="#cf1717"
-                          />
-                        ) : (
-                          <FaCircle
-                            size={8}
-                            strokeWidth={1.25}
-                            color="#25ca33"
-                          />
-                        )}
+                      <RadioGroupItem
+                        value={optionId}
+                        id={optionId}
+                        disabled={
+                          schedule.status === 'reserved' ||
+                          schedule.status === 'inProgress' ||
+                          schedule.status === 'expired'
+                        }
+                      />
+                      <Label
+                        className="flex items-center justify-between w-full"
+                        htmlFor={optionId}
+                      >
+                        <div className="flex justify-center items-center gap-3">
+                          {schedule.hourInit} - {schedule.hourEnd}
+                          {schedule.status === 'reserved' ||
+                          schedule.status === 'inProgress' ||
+                          schedule.status === 'expired' ? (
+                            <FaCircle
+                              size={8}
+                              strokeWidth={1.25}
+                              color="#cf1717"
+                            />
+                          ) : (
+                            <FaCircle
+                              size={8}
+                              strokeWidth={1.25}
+                              color="#25ca33"
+                            />
+                          )}
+                        </div>
+                        {schedule.status}
                       </Label>
                     </div>
                   )
