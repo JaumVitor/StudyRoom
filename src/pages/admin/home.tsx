@@ -1,71 +1,31 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
+import { useState } from "react"
+import UsingLayoutPage from "../usingLayoutPage"
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table'
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-import NotGraph from '@/assets/notgraph.png'
+import { FilePlus2, LineChart, Search } from "lucide-react"
+import { BoxInfo } from "@/components/BoxInfo/BoxInfo"
 
-import { BoxInfo } from '@/components/BoxInfo/BoxInfo'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { CreateRoom } from "@/components/CreateRoom/createRoom"
 
-import { Label } from '@radix-ui/react-label'
-import {
-  PlusCircle,
-  FilePlus2,
-  LineChart,
-  CalendarIcon,
-  Search
-} from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { Separator } from '@/components/ui/separator'
-import UsingLayoutPage from '../usingLayoutPage'
+import NotGraph from "@/assets/notgraph.png"
 
-interface StudyRoomProps {
+export interface StudyRoomProps {
   name: string
   ip: string
 }
 
 export function Home() {
-  //Somente para renderizar a tabela
-  const [isTable, setIsTable] = useState(true)
-
-  const [studyRooms, setStudyRooms] = useState<StudyRoomProps[]>(() => {
+  // Recupera o estado do localStorage ao inicializar
+    const [studyRooms, setStudyRooms] = useState<StudyRoomProps[]>(() => {
     // Recupera o estado do localStorage ao inicializar
     const savedStudyRooms = localStorage.getItem('studyRooms')
     return savedStudyRooms ? JSON.parse(savedStudyRooms) : []
   })
 
-  useEffect(() => {
-    // Armazena o estado no localStorage sempre que ele muda
-    localStorage.setItem('studyRooms', JSON.stringify(studyRooms))
-  }, [studyRooms])
-
-  // O restante do seu componente aqui
-  //use state para genrenciar as salas criadas que inicialmente é um array vazio
-  // const [studyRooms, setStudyRooms] = useState<StudyRoomProps[]>([])
-  const [nameStudyRoom, setnameStudyRoom] = useState('' as string)
-
-  const [IPStudyRoom, setIpStudyRoom] = useState('' as string)
-
-  //função para criar uma nova sala
-  function createStudyRoom(name: string, ip: string) {
-    //criar uma nova sala e adicionar no array
-    setStudyRooms([...studyRooms, { name, ip }])
-  }
   return (
     <UsingLayoutPage>
         <h1 className="text-2xl font-bold mb-2">Salas criadas</h1>
@@ -95,55 +55,7 @@ export function Home() {
                 </AlertDescription>
               </Alert>
               <div className="flex flex-wrap gap-5 justify-center items-center">
-                <Dialog>
-                  <DialogTrigger className="bg-green-500 rounded-full w-10 h-10 flex justify-center items-center text-zinc-900 m-4">
-                    <PlusCircle className="w-full h-full text-zinc-100" />
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle className="text-2xl">
-                        Realizar reserva de horário na sala
-                      </DialogTitle>
-                    </DialogHeader>
-                    <form className="flex flex-col gap-2 my-4">
-                      <Label className="text-zinc-900">Nome da sala</Label>
-                      <Input
-                        value={nameStudyRoom}
-                        onChange={e => setnameStudyRoom(e.target.value)}
-                        type="name"
-                        placeholder="Sala 01"
-                      />
-                      <Label className="text-zinc-900">
-                        Digite o IP do equipamento
-                      </Label>
-                      <Input
-                        value={IPStudyRoom}
-                        onChange={e => setIpStudyRoom(e.target.value)}
-                        type="name"
-                        placeholder="192.158.1.38"
-                      />
-                      {/* Pegar input e criar nova sala */}
-                      {/* Selecionar horários disponiveis */}
-                      <div className="mt-3 flex justify-between">
-                        <Button
-                          variant="destructive"
-                          className="font-bold shadow-md w-54 py-1 px-2 flex gap-1"
-                        >
-                          <p>Cancelar</p>
-                        </Button>
-                        <Button
-                          onClick={() =>
-                            createStudyRoom(nameStudyRoom, IPStudyRoom)
-                          }
-                          className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1"
-                        >
-                          <PlusCircle className="w-4 h-4" />
-                          <p>Agendar</p>
-                        </Button>
-                      </div>
-                    </form>
-                  </DialogContent>
-                </Dialog>
+              <CreateRoom />
               </div>
             </div>
           </>
@@ -198,60 +110,7 @@ export function Home() {
             })}
 
             <div className="flex flex-wrap gap-5 justify-center items-center">
-              <Dialog>
-                <DialogTrigger className="bg-green-500 rounded-full w-10 h-10 flex justify-center items-center text-zinc-900 my-8">
-                  <PlusCircle className="w-full h-full text-zinc-100" />
-                </DialogTrigger>
-
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle className="text-2xl">
-                      Realizar reserva de horário na sala
-                    </DialogTitle>
-                  </DialogHeader>
-
-                  <form className="flex flex-col gap-2 my-4">
-                    <Label className="text-zinc-900">Nome da sala</Label>
-                    <Input
-                      value={nameStudyRoom}
-                      onChange={e => setnameStudyRoom(e.target.value)}
-                      type="name"
-                      placeholder="Sala 01"
-                    />
-
-                    <Label className="text-zinc-900">
-                      Digite o IP do equipamento
-                    </Label>
-                    <Input
-                      value={IPStudyRoom}
-                      onChange={e => setIpStudyRoom(e.target.value)}
-                      type="name"
-                      placeholder="192.158.1.38"
-                    />
-                    {/* Pegar input e criar nova sala */}
-
-                    {/* Selecionar horários disponiveis */}
-                    <div className="mt-3 flex justify-between">
-                      <Button
-                        variant="destructive"
-                        className="font-bold shadow-md w-54 py-1 px-2 flex gap-1"
-                      >
-                        <p>Cancelar</p>
-                      </Button>
-
-                      <Button
-                        onClick={() =>
-                          createStudyRoom(nameStudyRoom, IPStudyRoom)
-                        }
-                        className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1"
-                      >
-                        <PlusCircle className="w-4 h-4" />
-                        <p>Agendar</p>
-                      </Button>
-                    </div>
-                  </form>
-                </DialogContent>
-              </Dialog>
+              <CreateRoom />
             </div>
           </div>
         )}
@@ -260,150 +119,24 @@ export function Home() {
           Histórico das reservas diárias
         </h1>
 
-        {isTable ? (
-          <div>
-            <Table className="border mb-3">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Salas</TableHead>
-                  <TableHead>Matriculas</TableHead>
-                  <TableHead>
-                    <div className="flex gap-1 items-center">
-                      <CalendarIcon />
-                      <p>Horário de inicio</p>
-                    </div>
-                  </TableHead>
-                  <TableHead>
-                    <div className="flex gap-1 items-center">
-                      <CalendarIcon />
-                      <p>Horário Final</p>
-                    </div>
-                  </TableHead>
-                  <TableHead>Código da reserva</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    <p>Sala 01</p>
-                  </TableCell>
-                  <TableCell>20189053817</TableCell>
-                  <TableCell>09:00</TableCell>
-                  <TableCell>11:00</TableCell>
-                  <TableCell>01Vim3L1</TableCell>
-                  <TableCell className="font-bold text-orange-600">
-                    Em andamento
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    <p>Sala 01</p>
-                  </TableCell>
-                  <TableCell>20189053817</TableCell>
-                  <TableCell>09:00</TableCell>
-                  <TableCell>11:00</TableCell>
-                  <TableCell>01Vim3L1</TableCell>
-                  <TableCell className="font-bold text-orange-600">
-                    Em andamento
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    <p>Sala 01</p>
-                  </TableCell>
-                  <TableCell>20189053817</TableCell>
-                  <TableCell>09:00</TableCell>
-                  <TableCell>11:00</TableCell>
-                  <TableCell>01Vim3L1</TableCell>
-                  <TableCell className="font-bold text-red-600">
-                    Reserva expirada
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    <p>Sala 01</p>
-                  </TableCell>
-                  <TableCell>20189053817</TableCell>
-                  <TableCell>09:00</TableCell>
-                  <TableCell>11:00</TableCell>
-                  <TableCell>UCim3WQ</TableCell>
-                  <TableCell className="font-bold text-red-600">
-                    Reserva expirada
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    <p>Sala 01</p>
-                  </TableCell>
-                  <TableCell>20189053817</TableCell>
-                  <TableCell>09:00</TableCell>
-                  <TableCell>11:00</TableCell>
-                  <TableCell>06Him3Ly</TableCell>
-                  <TableCell className="font-bold text-red-600">
-                    Reserva expirada
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    <p>Sala 01</p>
-                  </TableCell>
-                  <TableCell>20189053817</TableCell>
-                  <TableCell>09:00</TableCell>
-                  <TableCell>11:00</TableCell>
-                  <TableCell>67Fim3L2</TableCell>
-                  <TableCell className="font-bold text-green-600">
-                    Agendada
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    <p>Sala 01</p>
-                  </TableCell>
-                  <TableCell>20189053817</TableCell>
-                  <TableCell>09:00</TableCell>
-                  <TableCell>11:00</TableCell>
-                  <TableCell>03pim3Xq</TableCell>
-                  <TableCell className="font-bold text-green-600">
-                    Agendada
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">
-                    <p>Sala 01</p>
-                  </TableCell>
-                  <TableCell>20189053817</TableCell>
-                  <TableCell>09:00</TableCell>
-                  <TableCell>11:00</TableCell>
-                  <TableCell>94gim3Lo</TableCell>
-                  <TableCell className="font-bold text-green-600">
-                    Agendada
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+        <div>
+          {/* inserir imgagem quando não tiver o tabela */}
+          <div className="flex justify-center w-full">
+            <img className="w-2/4" src={NotGraph} alt="Nenhuma sala criada" />
           </div>
-        ) : (
-          <div>
-            {' '}
-            {/* inserir imgagem quando não tiver o tabela */}
-            <div className="flex justify-center w-full">
-              <img className="w-2/4" src={NotGraph} alt="Nenhuma sala criada" />
-            </div>
-            <Alert>
-              <div className="flex gap-6 justify-center items-center text-muted-foreground">
-                <LineChart className="w-10 h-10" />
-                <div>
-                  <AlertTitle>Opa!</AlertTitle>
-                  <AlertDescription>
-                    Aparentemente não existe histórico de reservas ainda.
-                    Precisa criar uma sala e reserva um horário!
-                  </AlertDescription>
-                </div>
+          <Alert>
+            <div className="flex gap-6 justify-center items-center text-muted-foreground">
+              <LineChart className="w-10 h-10" />
+              <div>
+                <AlertTitle>Opa!</AlertTitle>
+                <AlertDescription>
+                  Aparentemente não existe histórico de reservas ainda.
+                  Precisa criar uma sala e reserva um horário!
+                </AlertDescription>
               </div>
-            </Alert>
-          </div>
-        )}
+            </div>
+          </Alert>
+        </div>
       <div className="pb-6"></div>
     </UsingLayoutPage>
   )

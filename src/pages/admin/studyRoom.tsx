@@ -7,15 +7,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-
 import { Button } from "@/components/ui/button"
 import { Toaster } from "@/components/ui/sonner"
 import { Separator } from "@/components/ui/separator"
@@ -27,10 +18,11 @@ import { BoxInfo } from "@/components/BoxInfo/BoxInfo"
 
 import { CalendarIcon } from "@radix-ui/react-icons"
 
-import { Search, PlusCircle } from "lucide-react"
+import { Search } from "lucide-react"
 
 import { MdOutlineCameraAlt } from "react-icons/md";
 import UsingLayoutPage from "../usingLayoutPage"
+import { CreateSchedule } from "@/components/CreateSchedule/createSchedule"
 
 export function StudyRoom () {
   return (
@@ -45,31 +37,7 @@ export function StudyRoom () {
             <Search className="w-4 h-4"/>Filtrar
           </Button>
         </form>
-        <Dialog>
-          <DialogTrigger>
-            <Button className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
-              <PlusCircle className="w-4 h-4"/>
-              <p>Agendar Horário </p>
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Realizar reserva de horário na sala</DialogTitle>
-              <DialogDescription>
-                <form className="flex flex-col gap-2">
-                  <Input type="name" placeholder="Nome"/>
-                  <Input type="name" placeholder="Matricula"/>
-                  {/* Selecionar horários disponiveis */}
-                  <Button className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
-                    <PlusCircle className="w-4 h-4"/>
-                    <p>Agendar</p>
-                  </Button>
-                </form>
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-          <Toaster />
-        </Dialog>
+        <CreateSchedule />
       </div>
       <Toaster />
       <div>

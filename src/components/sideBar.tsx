@@ -18,6 +18,7 @@ import {
 
 import { FaArrowRightToBracket } from "react-icons/fa6";
 import { AlarmClockPlus, GraduationCap, Newspaper, School } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function SideBar () {
   return (
@@ -38,8 +39,8 @@ export default function SideBar () {
                 <CommandGroup heading="Salas">
 
                   <CommandItem className="flex gap-2">
-                    <GraduationCap/>
-                    Visualizar salas
+                    <GraduationCap />
+                    <Link to={"/"}>Visualizar salas</Link>
                   </CommandItem>
 
                   <CommandItem className="flex gap-2">
