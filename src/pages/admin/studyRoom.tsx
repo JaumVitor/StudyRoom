@@ -23,8 +23,13 @@ import { Search } from "lucide-react"
 import { MdOutlineCameraAlt } from "react-icons/md";
 import UsingLayoutPage from "../usingLayoutPage"
 import { CreateSchedule } from "@/components/CreateSchedule/createSchedule"
+import { useLocation } from "react-router-dom"
+
+// import { StudyRoomProps } from "@/pages/admin/home"
 
 export function StudyRoom () {
+  const { state } = useLocation()
+  
   return (
     <UsingLayoutPage>
       <h1 className="text-3xl font-bold mb-2">Horários reservados</h1>
@@ -41,7 +46,7 @@ export function StudyRoom () {
       </div>
       <Toaster />
       <div>
-        <Table className="border mb-3">
+        <Table className="border mb-3 ">
           <TableHeader>
             <TableRow>
               <TableHead>Usuários</TableHead>

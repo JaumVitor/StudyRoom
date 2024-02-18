@@ -12,6 +12,8 @@ import { BoxInfo } from "@/components/BoxInfo/BoxInfo"
 import { CreateRoom } from "@/components/CreateRoom/createRoom"
 
 import NotGraph from "@/assets/notgraph.png"
+import { Link } from "react-router-dom"
+import { StudyRoom } from "./studyRoom"
 
 export interface StudyRoomProps {
   name: string
@@ -20,12 +22,31 @@ export interface StudyRoomProps {
 
 export function Home() {
   // Recupera o estado do localStorage ao inicializar
-    const [studyRooms, setStudyRooms] = useState<StudyRoomProps[]>(() => {
+  const [studyRooms, setStudyRooms] = useState<StudyRoomProps[]>(() => {
     // Recupera o estado do localStorage ao inicializar
-    const savedStudyRooms = localStorage.getItem('studyRooms')
-    return savedStudyRooms ? JSON.parse(savedStudyRooms) : []
-  })
+    const savedStudyRooms = localStorage.getItem('studyRooms');
+    if (savedStudyRooms) {
+      const parsedStudyRooms = JSON.parse(savedStudyRooms);
+      // Verifica se o array recuperado do localStorage está vazio
+      if (Array.isArray(parsedStudyRooms) && parsedStudyRooms.length) {
+        return parsedStudyRooms;
+      }
+    }
+    // Retorna um array vazio se savedStudyRooms for null ou um array vazio
+    return [ 
+      {
+        name: 'Default Room',
+        ip: '0.0.0.0',
+        infoLamps: 'Default Info',
+        infoPeople: 'Default Info',
+        infoSplit: 'Default Info',
+      }
+    ];
+  });
 
+  const [nameStudyRoom, setNameStudyRoom] = useState<string>('')
+  const [IPStudyRoom, setIpStudyRoom] = useState<string>('')
+  
   return (
     <UsingLayoutPage>
         <h1 className="text-2xl font-bold mb-2">Salas criadas</h1>
@@ -55,7 +76,17 @@ export function Home() {
                 </AlertDescription>
               </Alert>
               <div className="flex flex-wrap gap-5 justify-center items-center">
-              <CreateRoom />
+              <CreateRoom 
+                studyRooms={studyRooms} 
+                setStudyRooms={setStudyRooms}
+
+                nameStudyRoom={nameStudyRoom} 
+                setnameStudyRoom={setNameStudyRoom}
+
+                IPStudyRoom={IPStudyRoom}
+                setIpStudyRoom={setIpStudyRoom}
+              />
+
               </div>
             </div>
           </>
@@ -64,53 +95,69 @@ export function Home() {
           <div className="grid grid-cols-2 gap-y-4">
             {studyRooms.map((studyRoom, index) => {
               return (
-                <BoxInfo
-                  key={index}
-                  Title={studyRoom.name}
-                  Content={studyRoom.ip}
-                  schedules={[
-                    {
-                      hourInit: '08:00',
-                      hourEnd: '10:00',
-                      status: 'reserved'
-                    },
-                    {
-                      hourInit: '10:00',
-                      hourEnd: '11:00',
-                      status: 'reserved'
-                    },
-                    {
-                      hourInit: '11:00',
-                      hourEnd: '12:00',
-                      status: 'reserved'
-                    },
-                    {
-                      hourInit: '12:00',
-                      hourEnd: '13:00',
-                      status: 'available'
-                    },
-                    {
-                      hourInit: '13:00',
-                      hourEnd: '14:00',
-                      status: 'reserved'
-                    },
-                    {
-                      hourInit: '14:00',
-                      hourEnd: '15:00',
-                      status: 'available'
-                    },
-                    {
-                      hourInit: '15:00',
-                      hourEnd: '16:00',
-                      status: 'reserved'
-                    }
-                  ]}
-                />
+                <Link 
+                  to={{
+                    pathname: '/studyRoom',
+                  }}
+                  state={studyRoom}
+                >
+                  <BoxInfo
+                    key={index}
+                    Title={studyRoom.name}
+                    Content={studyRoom.ip}
+                    schedules={[
+                      {
+                        hourInit: '08:00',
+                        hourEnd: '10:00',
+                        status: 'reserved'
+                      },
+                      {
+                        hourInit: '10:00',
+                        hourEnd: '11:00',
+                        status: 'reserved'
+                      },
+                      {
+                        hourInit: '11:00',
+                        hourEnd: '12:00',
+                        status: 'reserved'
+                      },
+                      {
+                        hourInit: '12:00',
+                        hourEnd: '13:00',
+                        status: 'available'
+                      },
+                      {
+                        hourInit: '13:00',
+                        hourEnd: '14:00',
+                        status: 'reserved'
+                      },
+                      {
+                        hourInit: '14:00',
+                        hourEnd: '15:00',
+                        status: 'available'
+                      },
+                      {
+                        hourInit: '15:00',
+                        hourEnd: '16:00',
+                        status: 'reserved'
+                      }
+                    ]}
+                  />
+                </Link>
               )
             })}
 
             <div className="flex flex-wrap gap-5 justify-center items-center">
-              <CreateRoom />
+            <CreateRoom 
+              studyRooms={studyRooms} 
+              setStudyRooms={setStudyRooms}
+
+              nameStudyRoom={nameStudyRoom} 
+              setnameStudyRoom={setNameStudyRoom}
+
+              IPStudyRoom={IPStudyRoom}
+              setIpStudyRoom={setIpStudyRoom}
+              />
             </div>
           </div>
         )}
@@ -130,7 +177,7 @@ export function Home() {
               <div>
                 <AlertTitle>Opa!</AlertTitle>
                 <AlertDescription>
-                  Aparentemente não existe histórico de reservas ainda.
+                  Aparentemente ainda não existe histórico de reservas.
                   Precisa criar uma sala e reserva um horário!
                 </AlertDescription>
               </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import {
   Dialog,
@@ -16,34 +17,55 @@ import { Button } from '../ui/button'
 
 import { StudyRoomProps } from '@/pages/admin/home'
 
-export function CreateRoom() {
-  const [nameStudyRoom, setnameStudyRoom] = useState<string>('')
-  const [IPStudyRoom, setIpStudyRoom] = useState<string>('')
+interface CreateRoomProps {
+  isCreateRoomSideBar?: boolean;
+  children?: React.ReactNode;
 
-  const [studyRooms, setStudyRooms] = useState<StudyRoomProps[]>(() => {
-    // Recupera o estado do localStorage ao inicializar
-    const savedStudyRooms = localStorage.getItem('studyRooms')
-    return savedStudyRooms ? JSON.parse(savedStudyRooms) : []
-  })
+  IPStudyRoom: string;
+  setIpStudyRoom : React.Dispatch<React.SetStateAction<string>>;
 
+  nameStudyRoom: string;
+  setnameStudyRoom : React.Dispatch<React.SetStateAction<string>>;
+
+  studyRooms : StudyRoomProps[];
+  setStudyRooms : React.Dispatch<React.SetStateAction<StudyRoomProps[]>>
+}
+
+export function CreateRoom({children,
+  isCreateRoomSideBar,
+  IPStudyRoom,
+  setIpStudyRoom,
+  nameStudyRoom,
+  setnameStudyRoom,
+  studyRooms,
+  setStudyRooms
+} : CreateRoomProps) {
   useEffect(() => {
     // Salva o estado no localStorage sempre que studyRooms for alterado
-    localStorage.setItem('studyRooms', JSON.stringify(studyRooms))
+    if (studyRooms !== undefined) {
+      localStorage.setItem('studyRooms', JSON.stringify(studyRooms))
+    }
   }, [studyRooms])
 
-  function createStudyRoom(name: string, IP: string) {
+  function createStudyRoom() {
     const newStudyRoom = {
-      name,
-      ip: IP,
+      name: nameStudyRoom,
+      ip: IPStudyRoom,
     }
     setStudyRooms([...studyRooms, newStudyRoom])
   }
 
+  const navigate = useNavigate();
+
   return (
     <Dialog>
-      <DialogTrigger className="bg-green-500 rounded-full w-10 h-10 flex justify-center items-center text-zinc-900 m-4">
-        <PlusCircle className="w-full h-full text-zinc-100" />
-      </DialogTrigger>
+      {isCreateRoomSideBar ?
+        children 
+        : 
+        <DialogTrigger className="bg-green-500 rounded-full w-10 h-10 flex justify-center items-center text-zinc-900 m-4">
+          <PlusCircle className="w-full h-full text-zinc-100" />
+        </DialogTrigger>
+      }
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-2xl">
@@ -69,13 +91,14 @@ export function CreateRoom() {
           {/* Selecionar horários disponiveis */}
           <div className="mt-3 flex justify-between">
             <Button
+              onClick={() => navigate(0)}
               variant="destructive"
               className="font-bold shadow-md w-54 py-1 px-2 flex gap-1"
             >
               <p>Cancelar</p>
             </Button>
             <Button
-              onClick={() => createStudyRoom(nameStudyRoom, IPStudyRoom)}
+              onClick={() => createStudyRoom()}
               className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1"
             >
               <PlusCircle className="w-4 h-4" />

@@ -13,7 +13,7 @@ import { Button } from "./ui/button"
 export function Header () {
   return (
     <>
-      <header className="bg-white bg-opacity-35 shadow-lg rounded-lg border border-zinc-400 border-opacity-20 backdrop-blur-md p-3 top-0 fixed mt-2 w-[90%]">
+      <header className="bg-white bg-opacity-35 shadow-lg rounded-lg border border-zinc-400 border-opacity-20 backdrop-blur-md p-3 top-0 fixed mt-2 w-[90%] z-10">
         <div className="flex justify-between items-center">
           <div className="flex gap-2 justify-center items-center">
             <Avatar className="w-7 h-7">
