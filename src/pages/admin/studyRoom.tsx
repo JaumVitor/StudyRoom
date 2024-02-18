@@ -48,7 +48,17 @@ export function StudyRoom () {
             <Search className="w-4 h-4"/>Filtrar
           </Button>
         </form>
-        <CreateSchedule />
+        <CreateSchedule schedules={
+          [
+            {hourInit: "10:00", hourEnd: "11:00", status: "expired"},
+            {hourInit: "11:00", hourEnd: "13:00", status: "inProgress"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
+            {hourInit: "14:00", hourEnd: "15:00", status: "reserved"},
+          ]
+        }/>
       </div>
       <Toaster />
       <div>
