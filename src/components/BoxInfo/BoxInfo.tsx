@@ -19,7 +19,7 @@ import { Separator } from "../ui/separator";
 export function BoxInfo ({Title, Content, schedules} : BoxInfoProps) {
   return (
     <div className="flex flex-1 flex-col mx-3 max-w-4xl cursor-pointer border rounded-md">
-      <div className="flex flex-1 flex-col hover:bg-orange-400 hover:text-slate-50 bg-white p-5 rounded-lg shadow-lg transition-all">
+      <div className="flex flex-1 flex-col hover:bg-orange-400 bg-white p-5 rounded-lg shadow-lg transition-all">
         <h1 className="text-lg font-bold flex items-center gap-1"><InfoCircledIcon/>{Title}</h1>
         
         <Separator className="mb-5"/>
@@ -35,7 +35,7 @@ export function BoxInfo ({Title, Content, schedules} : BoxInfoProps) {
 
             <div className="grid grid-cols-3 items-center justify-center gap-2">
               {schedules.map((schedule, index) => (
-                <div key={index} className="flex justify-center items-center gap-[3px]">
+                <div key={index} className="flex justify-center items-center gap-[3px] bg-orange-100 rounded-sm">
                   {schedule.status === "reserved" ?
                     <h1 className="text-[0.7rem] text-muted-foreground font-semibold">
                       {schedule.hourInit} - {schedule.hourEnd}

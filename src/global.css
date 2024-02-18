@@ -71,7 +71,7 @@
     @apply border-border;
   }
   html { 
-    @apply h-full;
+    font-family: "Kode Mono", monospace;
   }
   body {
     @apply bg-background text-foreground;

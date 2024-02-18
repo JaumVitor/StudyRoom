@@ -2,11 +2,14 @@ import { Header } from '@/components/Header'
 import Layout from '../components/layout'
 import SideBar from '../components/sideBar'
 // import ContentMain from '../components/contentMain'
-import Wrapper from '../components/wrapper'
-import { Home } from './admin/home'
-// import { StudyRoom } from './admin/studyRoom'
 
-export default function MainPage () {
+import Wrapper from '../components/wrapper'
+
+interface MainPageProps {
+  children: React.ReactNode;
+}
+
+export default function UsingLayoutPage ({children} : MainPageProps) {
   return (
     <>
       <div className='flex h-screen max-w-full'>
@@ -16,8 +19,7 @@ export default function MainPage () {
             <Header />
             <Wrapper>
               {/* Dependendo do tipo de usuário, vai renderizar um componente diferente */}
-              < Home/>
-              {/* <ContentMain /> */}
+              {children}
             </Wrapper>
           </div>
         </Layout>

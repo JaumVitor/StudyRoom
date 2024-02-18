@@ -28,7 +28,7 @@ export default function SideBar () {
       </SheetTrigger>
       <SheetContent side={"left"} className="bg-blue-950 text-zinc-50 border-zinc-400" >
         <SheetHeader>
-          <SheetTitle className="text-orange-400">STUDYROOM</SheetTitle>
+          <SheetTitle className="text-orange-400 font-[Honk] text-4xl">STUDYROOM</SheetTitle>
           <SheetDescription>
 
             <Command className="bg-blue-950 text-zinc-100 font-bold">

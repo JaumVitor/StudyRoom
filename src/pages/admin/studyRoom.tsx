@@ -30,22 +30,21 @@ import { CalendarIcon } from "@radix-ui/react-icons"
 import { Search, PlusCircle } from "lucide-react"
 
 import { MdOutlineCameraAlt } from "react-icons/md";
+import UsingLayoutPage from "../usingLayoutPage"
 
 export function StudyRoom () {
   return (
-    <>
-      <h1 className="text-3xl font-bold mb-4">Horários reservados</h1>
-
+    <UsingLayoutPage>
+      <h1 className="text-3xl font-bold mb-2">Horários reservados</h1>
       <div className="flex items-center justify-between mb-3">
         <form className="flex gap-2">
           <Input type="name" placeholder="Matricula"/>
           <Input type="name" placeholder="Status"/>
-          
+      
           <Button variant='link' className="flex gap-1">
             <Search className="w-4 h-4"/>Filtrar
           </Button>
         </form>
-
         <Dialog>
           <DialogTrigger>
             <Button className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
@@ -60,7 +59,6 @@ export function StudyRoom () {
                 <form className="flex flex-col gap-2">
                   <Input type="name" placeholder="Nome"/>
                   <Input type="name" placeholder="Matricula"/>
-
                   {/* Selecionar horários disponiveis */}
                   <Button className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
                     <PlusCircle className="w-4 h-4"/>
@@ -72,7 +70,6 @@ export function StudyRoom () {
           </DialogContent>
           <Toaster />
         </Dialog>
-
       </div>
       <Toaster />
       <div>
@@ -98,7 +95,7 @@ export function StudyRoom () {
           <TableBody>
             <TableRow>
               <TableCell className="font-medium"><p>Maria Eduarda</p></TableCell>
-        
+      
               <TableCell>10:00</TableCell>
               <TableCell>11:00</TableCell>
               <TableCell className="font-bold text-red-700">Reserva expirada</TableCell>
@@ -145,14 +142,12 @@ export function StudyRoom () {
               <TableCell>15:00</TableCell>
               <TableCell className="font-bold text-green-700">Agendado</TableCell>
             </TableRow>
-        
+      
           </TableBody>
         </Table>
       </div>
-
       <Separator className="m-4"/>
-
-      <h1 className="text-xl font-bold mb-3">Ver câmera da sala</h1>
+      <h1 className="text-xl font-bold mb-2">Ver câmera da sala</h1>
       <div className="cursor-pointer border-dashed border-[2px] border-slate-500 rounded-md bg-slate-300 shadow-sm mx-auto">
       
         <div className="w-full h-[15rem] flex justify-center items-center">
@@ -160,24 +155,22 @@ export function StudyRoom () {
           <p className="opacity-50">Câmera da sala</p>
         </div>
       </div>
-
       <Separator className="m-4"/>
-
-      <h1 className="text-xl font-bold mb-3">Informações da sala</h1>
+      <h1 className="text-xl font-bold mb-2">Informações da sala</h1>
       <div className="flex pb-10">
-        <BoxInfo 
+        <BoxInfo
           Title="Lampadas"
           Content="As lampadas estão ligadas"
         />
-        <BoxInfo 
+        <BoxInfo
           Title="Nº Pessoas"
           Content="3 pessoas"
         />
-        <BoxInfo 
+        <BoxInfo
           Title="Split"
           Content="O ar condicionado está ligado - Com temperatura de 21C"
         />
       </div>
-    </>
+    </UsingLayoutPage>
   )
 }
