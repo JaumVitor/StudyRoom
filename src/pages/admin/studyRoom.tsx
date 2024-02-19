@@ -55,8 +55,8 @@ export function StudyRoom () {
             {hourInit: "14:00", hourEnd: "15:00", status: "inProgress"},
             {hourInit: "14:00", hourEnd: "15:00", status: "inProgress"},
             {hourInit: "14:00", hourEnd: "15:00", status: "available"},
-            {hourInit: "14:00", hourEnd: "15:00", status: "available"},
-            {hourInit: "14:00", hourEnd: "15:00", status: "available"},
+            {hourInit: "18:00", hourEnd: "19:00", status: "available"},
+            {hourInit: "20:00", hourEnd: "21:00", status: "available"},
           ]
         }/>
       </div>

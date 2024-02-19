@@ -26,7 +26,7 @@ export const AuthUserProvider = ({ children } : { children : React.ReactNode}) =
     setUser({
       name: 'Jaum_https',
       matricula: '123456',
-      type: 'student'
+      type: 'admin'
     })
   }
 

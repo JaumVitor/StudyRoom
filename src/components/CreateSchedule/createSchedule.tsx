@@ -28,22 +28,21 @@ interface CreateScheduleProps {
   ]
 }
 
-interface ScheduleItem {
-  hourInit: string;
-  hourEnd: string;
-  status: string;
-}
+// interface ScheduleItem {
+//   hourInit: string;
+//   hourEnd: string;
+//   status: string;
+// }
 
 export function CreateSchedule({ schedules }: CreateScheduleProps) {
   const [matricula, setMatricula] = useState('');
-  const [selectedSchedule, setSelectedSchedule] = useState<ScheduleItem>();
-
-  console.log(matricula);   
+  const [selectedSchedule, setSelectedSchedule] = useState<number>(0);
+  
   function createReservation() {
     // Cria um objeto de reserva
     const reservation = {
       matricula: matricula, 
-      schedule: selectedSchedule, 
+      schedule: schedules[selectedSchedule], 
       uniqueCode: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), 
     };
   
@@ -89,7 +88,10 @@ export function CreateSchedule({ schedules }: CreateScheduleProps) {
                       <RadioGroupItem
                         value={optionId}
                         id={optionId}
-                        onChange={() => setSelectedSchedule(schedule)}
+                        onClick={() => {
+                          // console.log(index + 1);
+                          setSelectedSchedule(index)
+                        }}
                         disabled={
                           schedule.status === 'reserved' ||
                           schedule.status === 'inProgress' ||
