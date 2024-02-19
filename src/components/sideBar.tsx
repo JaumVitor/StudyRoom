@@ -33,6 +33,9 @@ import { useState } from 'react'
 import { CaretSortIcon } from '@radix-ui/react-icons'
 
 import { StudyRoomProps } from '@/pages/admin/home'
+// import { toogleContext } from '@/contexts/toogleContext'
+
+// const { toogleDialog } = useContext(toogleContext)
 
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -131,6 +134,7 @@ export default function SideBar() {
                               to={{
                                 pathname: '/studyRoom'
                               }}
+                              key={index}
                               state={studyRoom}
                               onClick={toggleSidebar}
                               className="flex gap-2 items-center hover:bg-orange-500 hover:text-zinc-900 px-4 py-2 rounded-md transition-all"
@@ -138,7 +142,6 @@ export default function SideBar() {
                                 <GraduationCap />
                                 {studyRoom.name}
                               <CommandItem
-                                key={index}
                               >
                               </CommandItem>
                             </Link>

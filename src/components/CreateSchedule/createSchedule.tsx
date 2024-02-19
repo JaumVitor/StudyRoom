@@ -14,6 +14,7 @@ import { Toaster } from '../ui/sonner'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { Label } from '../ui/label'
 import { FaCircle } from 'react-icons/fa6'
+import { useState } from 'react'
 
 interface CreateScheduleProps {
   schedules: [
@@ -27,7 +28,29 @@ interface CreateScheduleProps {
   ]
 }
 
+interface ScheduleItem {
+  hourInit: string;
+  hourEnd: string;
+  status: string;
+}
+
 export function CreateSchedule({ schedules }: CreateScheduleProps) {
+  const [matricula, setMatricula] = useState('');
+  const [selectedSchedule, setSelectedSchedule] = useState<ScheduleItem>();
+
+  console.log(matricula);   
+  function createReservation() {
+    // Cria um objeto de reserva
+    const reservation = {
+      matricula: matricula, 
+      schedule: selectedSchedule, 
+      uniqueCode: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), 
+    };
+  
+    // Converte o objeto da reserva em uma string e armazena no localStorage
+    localStorage.setItem('reservation', JSON.stringify(reservation));
+  }
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -43,11 +66,22 @@ export function CreateSchedule({ schedules }: CreateScheduleProps) {
           </DialogTitle>
           <DialogDescription>
             <form className="flex flex-col gap-2">
-              <Input className="mb-3" type="name" placeholder="Matricula" />
+              <Input 
+                value={matricula}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setMatricula(e.target.value);
+                }} 
+                className="mb-3" 
+                type="name" 
+                placeholder="Matricula" 
+              />
 
               <Label className="text-zinc-900">Horários disponiveis</Label>
               {/* Selecionar horários disponiveis */}
-              <RadioGroup className="mb-4">
+              <RadioGroup 
+                className="mb-4"
+              >
                 {schedules.map((schedule, index) => {
                   const optionId = `option-${index + 1}` // option-1, option-2, option-3, ...
                   return (
@@ -55,6 +89,7 @@ export function CreateSchedule({ schedules }: CreateScheduleProps) {
                       <RadioGroupItem
                         value={optionId}
                         id={optionId}
+                        onChange={() => setSelectedSchedule(schedule)}
                         disabled={
                           schedule.status === 'reserved' ||
                           schedule.status === 'inProgress' ||
@@ -90,7 +125,7 @@ export function CreateSchedule({ schedules }: CreateScheduleProps) {
                 })}
               </RadioGroup>
 
-              <Button className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
+              <Button onClick={createReservation} type='submit' className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
                 <PlusCircle className="w-4 h-4" />
                 <p>Agendar</p>
               </Button>

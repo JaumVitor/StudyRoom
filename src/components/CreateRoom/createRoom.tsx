@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import {
   Dialog,
@@ -23,6 +23,11 @@ interface CreateRoomProps {
   // name: string;
   // ip: string;
 }
+
+// import { useContext } from 'react'
+// import { toogleContext } from '@/contexts/toogleContext'
+
+// const { toogleDialog } = useContext(toogleContext)
 
 export function CreateRoom({children, isCreateRoomSideBar} : CreateRoomProps) {
   const [nameStudyRoom, setnameStudyRoom] = useState<string>('')
@@ -57,8 +62,6 @@ export function CreateRoom({children, isCreateRoomSideBar} : CreateRoomProps) {
     setStudyRooms([...studyRooms, newStudyRoom])
   }
 
-  const navigate = useNavigate();
-
   return (
     <Dialog>
       {isCreateRoomSideBar ?
@@ -92,13 +95,14 @@ export function CreateRoom({children, isCreateRoomSideBar} : CreateRoomProps) {
           {/* Pegar input e criar nova sala */}
           {/* Selecionar horários disponiveis */}
           <div className="mt-3 flex justify-between">
-            <Button
-              onClick={() => navigate(0)}
-              variant="destructive"
-              className="font-bold shadow-md w-54 py-1 px-2 flex gap-1"
-            >
-              <p>Cancelar</p>
-            </Button>
+            <Link to={'/'}>
+              <Button
+                variant="destructive"
+                className="font-bold shadow-md w-54 py-1 px-2 flex gap-1"
+              >
+                <p>Cancelar</p>
+              </Button>
+            </Link>
             <Button
               onClick={() => createStudyRoom(nameStudyRoom, IPStudyRoom)}
               className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1"
