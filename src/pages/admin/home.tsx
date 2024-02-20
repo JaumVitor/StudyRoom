@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import UsingLayoutPage from '../usingLayoutPage'
+import axios from 'axios';
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -24,7 +25,15 @@ export interface StudyRoomProps {
 import { AuthUserContext } from '@/contexts/auth'
 
 export function Home() {
-  const { user, existReservation, setExistReservation } = useContext(AuthUserContext)
+  const { user, existReservation, setExistReservation, ipAddress, setIpAddress } = useContext(AuthUserContext)
+
+  useEffect(() => {
+    fetch(ipAddress + '/salas')
+    .then(response => {
+      console.log(response)
+    }).then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+  }, [])
 
   // Recupera o estado do localStorage ao inicializar
   const [studyRooms] = useState<StudyRoomProps[]>(() => {
