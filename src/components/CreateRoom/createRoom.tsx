@@ -33,6 +33,8 @@ export function CreateRoom({children, isCreateRoomSideBar} : CreateRoomProps) {
   const [nameStudyRoom, setnameStudyRoom] = useState<string>('')
   const [IPStudyRoom, setIpStudyRoom] = useState<string>('')
 
+  // const navigate = useNavigate();
+
   const [studyRooms, setStudyRooms] = useState<StudyRoomProps[]>(() => {
     // Recupera o estado do localStorage ao inicializar
     const savedStudyRooms = localStorage.getItem('studyRooms');

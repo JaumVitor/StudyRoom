@@ -15,6 +15,7 @@ import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { Label } from '../ui/label'
 import { FaCircle } from 'react-icons/fa6'
 import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 interface CreateScheduleProps {
   schedules: [
@@ -35,6 +36,9 @@ interface CreateScheduleProps {
 // }
 
 export function CreateSchedule({ schedules }: CreateScheduleProps) {
+  const { state } = useLocation()
+
+  const [studyRoom] = useState(state)
   const [matricula, setMatricula] = useState('');
   const [selectedSchedule, setSelectedSchedule] = useState<number>(0);
   
@@ -43,9 +47,12 @@ export function CreateSchedule({ schedules }: CreateScheduleProps) {
     const reservation = {
       matricula: matricula, 
       schedule: schedules[selectedSchedule], 
+      studyRoom: studyRoom,
+
       uniqueCode: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), 
     };
-  
+    // Adiciona a reserva no array de reservas
+    schedules[selectedSchedule].status = 'reserved';
     // Converte o objeto da reserva em uma string e armazena no localStorage
     localStorage.setItem('reservation', JSON.stringify(reservation));
   }
@@ -127,10 +134,12 @@ export function CreateSchedule({ schedules }: CreateScheduleProps) {
                 })}
               </RadioGroup>
 
-              <Button onClick={createReservation} type='submit' className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
-                <PlusCircle className="w-4 h-4" />
-                <p>Agendar</p>
-              </Button>
+              <Link to={'/'}>
+                <Button onClick={createReservation} type='submit' className="bg-green-500 hover:bg-green-600 font-bold shadow-md w-54 py-1 px-2 flex gap-1">
+                  <PlusCircle className="w-4 h-4" />
+                  <p>Agendar</p>
+                </Button>
+              </Link>
             </form>
           </DialogDescription>
         </DialogHeader>

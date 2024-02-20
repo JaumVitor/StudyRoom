@@ -14,6 +14,8 @@ import { CreateRoom } from '@/components/CreateRoom/createRoom'
 import NotGraph from '@/assets/notgraph.png'
 import { Link } from 'react-router-dom'
 
+import QRCode from 'qrcode.react'
+
 export interface StudyRoomProps {
   name: string
   ip: string
@@ -22,7 +24,7 @@ export interface StudyRoomProps {
 import { AuthUserContext } from '@/contexts/auth'
 
 export function Home() {
-  const { user } = useContext(AuthUserContext)
+  const { user, existReservation, setExistReservation } = useContext(AuthUserContext)
 
   // Recupera o estado do localStorage ao inicializar
   const [studyRooms] = useState<StudyRoomProps[]>(() => {
@@ -39,18 +41,22 @@ export function Home() {
     return []
   })
 
-  const [reservations, setReservations] = useState([]);
+  const [reservation, setReservation] = useState([])
+  const [uniqueCode, setUniqueCode] = useState<string | null>(null)
 
   useEffect(() => {
     // Recupera as reservas do localStorage e converte de volta em um array de objetos
-    const storedReservations = JSON.parse(localStorage.getItem('reservations') as string);
+    const storedReservation = JSON.parse(
+      localStorage.getItem('reservation') as string
+    )
 
-    if (storedReservations) {
-      setReservations(storedReservations);
+    if (storedReservation) {
+      setReservation(storedReservation)
+      setExistReservation(true)
+      setUniqueCode(storedReservation.uniqueCode)
     }
-  }, []);
+  }, [])
 
-  console.log(reservations);
   return (
     <div>
       {user.type === 'admin' ? (
@@ -174,87 +180,150 @@ export function Home() {
           <div className="pb-6"></div>
         </UsingLayoutPage>
       ) : (
+        // Caso user sera STUDENT
         <UsingLayoutPage>
-          <h1 className="text-2xl font-bold mb-2">Código de reserva</h1>
-         
-          <h1 className="text-2xl font-bold mb-2">Salas disponiveis para reserva</h1>
-          <div className='flex flex-col gap-2'>
-            {studyRooms.map((studyRoom, index) => {
-              return (
-                <Link
-                  to={{
-                    pathname: '/studyRoom'
-                  }}
-                  state={studyRoom}
-                  key={index}
+          {/* se user tiver reserva, exibir o codigo da reserva */}
+          {existReservation ? (
+            <div>
+              <h1 className="text-2xl font-bold mb-2">
+                Codigo da sala reservada
+              </h1>
+
+              <div className="bg-zinc-100 border rounded-md shadow-md py-8 flex flex-col justify-center items-center">
+                <QRCode value={`${uniqueCode}`} size={250} />
+                <h1 className="text-xl font-bold mb-2">{uniqueCode}</h1>
+                <Button 
+                  variant={'destructive'}
+                  onClick={() => {
+                      localStorage.removeItem('reservation')
+                      setExistReservation(false)
+                    }}
                 >
-                  <BoxInfo
-                    Title={studyRoom.name}
-                    Content={studyRoom.ip}
-                    schedules={[
-                      {
-                        hourInit: '08:00',
-                        hourEnd: '10:00',
-                        status: 'reserved'
-                      },
-                      {
-                        hourInit: '10:00',
-                        hourEnd: '11:00',
-                        status: 'reserved'
-                      },
-                      {
-                        hourInit: '11:00',
-                        hourEnd: '12:00',
-                        status: 'reserved'
-                      },
-                      {
-                        hourInit: '12:00',
-                        hourEnd: '13:00',
-                        status: 'available'
-                      },
-                      {
-                        hourInit: '13:00',
-                        hourEnd: '14:00',
-                        status: 'reserved'
-                      },
-                      {
-                        hourInit: '14:00',
-                        hourEnd: '15:00',
-                        status: 'available'
-                      },
-                      {
-                        hourInit: '15:00',
-                        hourEnd: '16:00',
-                        status: 'reserved'
-                      }
-                    ]}
-                  />
-                </Link>
-              )
-            })}
-          </div>
-          <Separator className="m-5" />
-          <h1 className="text-2xl font-bold mb-2">
-            Histórico das reservas diárias
-          </h1> 
-
-          <div className="flex justify-center w-full">
-            <img className="w-2/4" src={NotGraph} alt="Nenhuma sala criada" />
-          </div>
-
-          <Alert>
-            <div className="flex gap-6 justify-center items-center text-muted-foreground">
-              <LineChart className="w-10 h-10" />
-              <div>
-                <AlertTitle>Opa!</AlertTitle>
-                <AlertDescription>
-                  Aparentemente ainda não existe histórico de reservas. Precisa
-                  fazer uma reserva!
-                </AlertDescription>
+                  Cancelar reserva
+                </Button>
               </div>
+
+              <Separator className="mb-5 mt-5" />
+              <h1 className="text-2xl font-bold mb-2">
+                Histórico das reservas diárias
+              </h1>
+              <div className="flex justify-center w-full">
+                <img
+                  className="w-2/4"
+                  src={NotGraph}
+                  alt="Nenhuma sala criada"
+                />
+              </div>
+              <Alert>
+                <div className="flex gap-6 items-center text-muted-foreground">
+                  <LineChart className="w-10 h-10" />
+                  <div>
+                    <AlertTitle>Opa!</AlertTitle>
+                    <AlertDescription>
+                      Aparentemente ainda não existe histórico de reservas.
+                      Precisa fazer uma reserva!
+                    </AlertDescription>
+                  </div>
+                </div>
+              </Alert>
+              <div className="pb-6"></div>
             </div>
-          </Alert>
-          <div className="pb-6"></div>
+          ) : (
+            <div>
+              <h1 className="text-2xl font-bold mb-2">Visualizar reservas</h1>
+              <Alert variant={'destructive'}>
+                <FilePlus2 className="h-5 w-5" />
+                <AlertTitle>Ops!</AlertTitle>
+                <AlertDescription>
+                  Parece que ainda não temos nenhuma reserva. Selecione uma sala disponivel abaixo!
+                </AlertDescription>
+              </Alert>
+
+              <Separator className="mb-5 mt-5" />
+              <h1 className="text-2xl font-bold mb-2">
+                Salas disponiveis para reserva
+              </h1>
+              <div className="flex flex-col gap-2">
+                {studyRooms.map((studyRoom, index) => {
+                  return (
+                    <Link
+                      to={{
+                        pathname: '/studyRoom'
+                      }}
+                      state={studyRoom}
+                      key={index}
+                    >
+                      <BoxInfo
+                        Title={studyRoom.name}
+                        Content={studyRoom.ip}
+                        schedules={[
+                          {
+                            hourInit: '08:00',
+                            hourEnd: '10:00',
+                            status: 'reserved'
+                          },
+                          {
+                            hourInit: '10:00',
+                            hourEnd: '11:00',
+                            status: 'reserved'
+                          },
+                          {
+                            hourInit: '11:00',
+                            hourEnd: '12:00',
+                            status: 'reserved'
+                          },
+                          {
+                            hourInit: '12:00',
+                            hourEnd: '13:00',
+                            status: 'available'
+                          },
+                          {
+                            hourInit: '13:00',
+                            hourEnd: '14:00',
+                            status: 'reserved'
+                          },
+                          {
+                            hourInit: '14:00',
+                            hourEnd: '15:00',
+                            status: 'available'
+                          },
+                          {
+                            hourInit: '15:00',
+                            hourEnd: '16:00',
+                            status: 'reserved'
+                          }
+                        ]}
+                      />
+                    </Link>
+                  )
+                })}
+              </div>
+              <Separator className="m-5" />
+              <h1 className="text-2xl font-bold mb-2">
+                Histórico das reservas diárias
+              </h1>
+              <div className="flex justify-center w-full">
+                <img
+                  className="w-2/4"
+                  src={NotGraph}
+                  alt="Nenhuma sala criada"
+                />
+              </div>
+              <Alert>
+                <div className="flex gap-6 items-center text-muted-foreground">
+                  <LineChart className="w-10 h-10" />
+                  <div>
+                    <AlertTitle>Opa!</AlertTitle>
+                    <AlertDescription>
+                      Aparentemente ainda não existe histórico de reservas.
+                      Precisa fazer uma reserva!
+                    </AlertDescription>
+                  </div>
+                </div>
+              </Alert>
+              <div className="pb-6"></div>
+            </div>
+          )}
         </UsingLayoutPage>
       )}
     </div>
